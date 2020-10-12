@@ -1,4 +1,4 @@
 export default {
-  userAuthorization: false,
+  userAuthorization: true,
   token: "",
 };
