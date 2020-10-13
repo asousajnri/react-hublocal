@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import Routes from "./routes";
 
-const App = ({ userAuthorization }) => {
-  return <Routes userAuthorization={userAuthorization} />;
+const App = ({ token }) => {
+  return <Routes token={token} />;
 };
 
 export default connect((state) => ({
-  userAuthorization: state.userAuthorization,
+  token: state.user_token,
 }))(App);

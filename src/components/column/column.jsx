@@ -8,24 +8,33 @@ import Header from "./header";
 
 import { StyledColumn, TasksListing } from "./column-styles";
 
-const Column = ({ title, tasksTotal }) => (
+const Column = ({ 
+  title, 
+  tasksTotal, 
+  tasks, 
+  updateTasks,
+  userToken 
+}) => (
   <StyledColumn>
     <Header title={title} tasksTotal={tasksTotal} />
-
     <TasksListing>
-      <Task
-        as="li"
-        title="Task 1"
-        description="asalkdnsdnsaklfnsklfnsk"
-        timestamps={{ created_at: "10-10-2020", updated_at: "10-10-2021" }}
-      />
-
-      <Task
-        as="li"
-        title="Task 1"
-        description="asalkdnsdnsaklfnsklfnsk"
-        timestamps={{ created_at: "10-10-2020", updated_at: "10-10-2021" }}
-      />
+      {tasks.map(task => (
+        <Task
+          key={task.id}
+          as="li"
+          idTask={task.id}
+          userId={task.user_id}
+          userToken={userToken}
+          title={task.name}
+          description={task.description}
+          updateTasks={updateTasks}
+          timestamps={{ 
+            created_at: task.createdAt.split("T")[0], 
+            updated_at: task.updatedAt.split("T")[0] 
+          }}
+        />
+      ))}
+      
     </TasksListing>
 
     <Button as={Link} to="/criar-tarefa">

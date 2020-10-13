@@ -6,3 +6,5 @@ export { default as Container } from "./container";
 export { default as Column } from "./column";
 export { default as Task } from "./task";
 export { default as Title } from "./title";
+export { default as Loading } from "./loading";
+export { default as LogMessage } from "./log-message";

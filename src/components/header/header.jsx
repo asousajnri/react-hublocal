@@ -1,10 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { logout } from "../../store/actions";
 
 import Container from "../container";
 
 import { StyledHeader, Profile } from "./header-styles";
 
-const Header = () => {
+
+const Header = ({ dispatch, user_name }) => {
   return (
     <StyledHeader>
       <Container align="flex-start">
@@ -14,9 +18,9 @@ const Header = () => {
             src="https://picsum.photos/id/300/100/100"
             alt=""
           />
-          <div class="profile-content">
-            <h2 className="profile-name">Antônio</h2>
-            <span className="exit">Sair</span>
+          <div className="profile-content">
+            <h2 className="profile-name">{user_name}</h2>
+            <span className="exit" onClick={() => dispatch(logout())}>Sair</span>
           </div>
         </Profile>
       </Container>
@@ -24,4 +28,6 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default connect(state => ({
+  user_name: state.user_name,
+}))(Header);

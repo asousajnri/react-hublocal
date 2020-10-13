@@ -4,9 +4,35 @@ import { FiTrash2, FiEdit3 } from "react-icons/fi";
 import { BiTimeFive } from "react-icons/bi";
 import { MdUpdate } from "react-icons/md";
 
+import api from "../../api";
+
 import { StyledTask, StyledTimeStamps, StyledActions } from "./task-styles";
 
-const Task = ({ as, title, description, timestamps }) => {
+const Task = ({ 
+  idTask, 
+  userId,
+  userToken, 
+  as, 
+  title, 
+  description, 
+  timestamps,
+  updateTasks
+}) => {
+  const handleDelete = async () => {
+    try {
+      await api({
+        method: "DELETE",
+        url: `users/${userId}/tasks/${idTask}`,
+        headers: {
+          authorization: `Bearer ${userToken}`
+        }
+      })
+      updateTasks(oldState => [...oldState.filter(task => task.id !== idTask)])
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <StyledTask as={as}>
       <h2>{title}</h2>
@@ -23,14 +49,17 @@ const Task = ({ as, title, description, timestamps }) => {
       </StyledTimeStamps>
       <StyledActions>
         <Link
-          to={`/atualizar-tarefa/${1}`}
+          to={`/atualizar-tarefa/${userId}/tasks/${idTask}`}
           className="actions-icon actions-icon--edit"
         >
           <FiEdit3 />
         </Link>
-        <Link to="/" className="actions-icon actions-icon--delete">
+        <span 
+          className="actions-icon actions-icon--delete"
+          onClick={() => handleDelete()}
+        >
           <FiTrash2 />
-        </Link>
+        </span>
       </StyledActions>
     </StyledTask>
   );

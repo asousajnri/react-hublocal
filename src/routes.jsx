@@ -14,30 +14,30 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./assets/styles/global";
 import themeDefault from "./assets/styles/themes/default";
 
-const Routes = ({ userAuthorization }) => {
+const Routes = ({ token }) => {
   return (
     <ThemeProvider theme={themeDefault}>
       <GlobalStyles />
       <Router>
-        {userAuthorization && <Header />}
+        {token && <Header />}
 
         <Switch>
           <Route exact path="/">
-            {!userAuthorization ? <Login /> : <Redirect to="/minhas-tarefas" />}
+            {!token ? <Login /> : <Redirect to="/minhas-tarefas" />}
           </Route>
           <Route path="/registrar-se">
-            {!userAuthorization ? (
+            {!token ? (
               <SignUp />
             ) : (
               <Redirect to="/minhas-tarefas" />
             )}
           </Route>
 
-          {userAuthorization ? (
+          {token ? (
             <>
               <Route path="/minhas-tarefas" component={TasksListing} />
               <Route path="/criar-tarefa" component={TaskCreate} />
-              <Route path="/atualizar-tarefa/:task_id" component={TaskUpdate} />
+              <Route path="/atualizar-tarefa/:user_id/tasks/:task_id" component={TaskUpdate} />
             </>
           ) : (
             <Redirect to="/" />

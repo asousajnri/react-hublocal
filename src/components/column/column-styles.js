@@ -9,6 +9,7 @@ export const StyledColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: max-content;
 `;
 
 export const TasksListing = styled.ul`

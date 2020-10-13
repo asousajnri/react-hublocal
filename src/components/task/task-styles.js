@@ -58,14 +58,12 @@ export const StyledActions = styled.div`
     align-items: center;
     margin-right: 0.5rem;
     transition: 0.3s;
-
-    &:last-of-type {
-      margin-right: 0;
-    }
+    cursor: pointer;
   }
 
   .actions-icon--edit {
     background: ${(props) => props.theme.colors.secondary};
+    margin-right: 0.8rem;
 
     &:hover {
       background: ${(props) => shade(0.3, props.theme.colors.secondary)};
