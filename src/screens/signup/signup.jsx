@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Creators as SessionActions } from "../../store/ducks/session";
 
 import api from "../../api";
 
@@ -72,7 +74,10 @@ const SignUp = ({ user_id, user_token }) => {
   );
 };
 
-export default connect(state => ({
-  user_id: state.user_id,
-  user_token: state.user_token
-}))(SignUp);
+const mapStateToProps = state => ({
+  session: state.session
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(SessionActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

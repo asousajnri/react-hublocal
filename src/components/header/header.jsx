@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-
-import { logout } from "../../store/actions";
+import { bindActionCreators } from "redux";
+import { Creators as SessionActions } from "../../store/ducks/session";
 
 import Container from "../container";
 
 import { StyledHeader, Profile } from "./header-styles";
 
 
-const Header = ({ dispatch, user_name }) => {
+const Header = ({ logout, user_name }) => {
   return (
     <StyledHeader>
       <Container align="flex-start">
@@ -20,7 +20,7 @@ const Header = ({ dispatch, user_name }) => {
           />
           <div className="profile-content">
             <h2 className="profile-name">{user_name}</h2>
-            <span className="exit" onClick={() => dispatch(logout())}>Sair</span>
+            <span className="exit" onClick={() => logout()}>Sair</span>
           </div>
         </Profile>
       </Container>
@@ -28,6 +28,10 @@ const Header = ({ dispatch, user_name }) => {
   );
 };
 
-export default connect(state => ({
-  user_name: state.user_name,
-}))(Header);
+const mapStateToProps = state => ({
+  session: state.session
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(SessionActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

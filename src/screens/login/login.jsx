@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
-import * as ReduxActions from "../../store/actions";
+import { bindActionCreators } from "redux";
+import { Creators as SessionActions } from "../../store/ducks/session";
 
 import api from "../../api";
 
@@ -10,7 +10,7 @@ import { Form, Field, Button, Loading, LogMessage } from "../../components";
 
 import { StyledLogin, Separator } from "./login-styles";
 
-const Login = ({ dispatch }) => {
+const Login = ({ singin }) => {
   const [isLogin, setIsLogin] = React.useState(false);
   const [error, setError] = React.useState(null);
 
@@ -42,7 +42,7 @@ const Login = ({ dispatch }) => {
     
       if(data) {
         const { user: { id: user_id, name: user_name}, token: user_token } = data;
-        dispatch(ReduxActions.startSession({ user_id, user_name, user_token }))
+        singin({ user_id, user_name, user_token });
       }
     } catch (error) {
       setError("usuário não encontrado!");
@@ -71,4 +71,10 @@ const Login = ({ dispatch }) => {
   );
 };
 
-export default connect(state => ({ user_name: state.user_name }))(Login);
+const mapStateToProps = state => ({ 
+  session: state.session
+ });
+
+ const mapDispatchToProps = dispatch => bindActionCreators(SessionActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
